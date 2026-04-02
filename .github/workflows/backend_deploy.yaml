@@ -10,7 +10,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -19,6 +19,13 @@ jobs:
         uses: pnpm/action-setup@v4
         with:
           version: 10
+
+      - name: Build Frontend (generate worker assets)
+        run: |
+          cd frontend
+          pnpm install --no-frozen-lockfile
+          pnpm build:pages
+          cd ..
 
       - name: Deploy Backend
         run: |
